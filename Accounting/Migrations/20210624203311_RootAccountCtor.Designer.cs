@@ -5,14 +5,16 @@ using Accounting.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Accounting.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210624203311_RootAccountCtor")]
+    partial class RootAccountCtor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,16 +28,16 @@ namespace Accounting.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AccountGroup")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DisplayPosition")
                         .HasColumnType("int");
 
-                    b.Property<int>("Group")
-                        .HasColumnType("int");
-
                     b.Property<int>("Grouping")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HaveSet")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -43,9 +45,6 @@ namespace Accounting.Migrations
 
                     b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PrivateSet")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

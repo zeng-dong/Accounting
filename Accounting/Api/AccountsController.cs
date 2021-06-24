@@ -14,7 +14,8 @@ namespace Accounting.Api
 
         public string InsertThreeDifferentGroupsOfAccounts()
         {
-            var root = new RootAccount();
+            var root = new RootAccount("root", "100", "root desc", 1);
+            //var root = new RootAccount();
             var heading = new HeadingAccount();
             var posting = new PostingAccount();
 
@@ -55,5 +56,8 @@ info: Microsoft.EntityFrameworkCore.Database.Command[20101]
 
              */
         }
+
+
+
     }
 }
