@@ -5,20 +5,31 @@ namespace Accounting.Domain
     public abstract class BaseEntity
     {
         public Guid Id { get; set; }
+
+        protected BaseEntity()
+        {
+        }
+
+        protected BaseEntity(Guid id)
+            : this()
+        {
+            Id = id;
+        }
+
+
         protected object Actual => this;
 
         public override bool Equals(object obj)
         {
-            var other = obj as BaseEntity;
-
-            if (other is null)
+            if (!(obj is BaseEntity other))
                 return false;
 
             if (ReferenceEquals(this, other))
                 return true;
 
-            if (Actual.GetType() != other.Actual.GetType())
+            if (GetRealType() != other.GetRealType())
                 return false;
+
 
             if (Id == Guid.Empty || other.Id == Guid.Empty)
                 return false;
@@ -44,12 +55,22 @@ namespace Accounting.Domain
 
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            return (GetRealType().ToString() + Id).GetHashCode();
         }
 
         public Object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        private Type GetRealType()
+        {
+            Type type = GetType();
+
+            if (type.ToString().Contains("Castle.Proxies."))
+                return type.BaseType;
+
+            return type;
         }
     }
 }
