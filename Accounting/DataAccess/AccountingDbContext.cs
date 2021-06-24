@@ -30,15 +30,13 @@ namespace Accounting.DataAccess
                 .UseLoggerFactory(MyLoggerFactory)
                 .EnableSensitiveDataLogging(true)
                 .UseSqlServer("Server=DESKTOP-QB0EFH1;Database=Accounting;Trusted_Connection=True;MultipleActiveResultSets=true");
-
-            //.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database =Accounting; Trusted_Connection=True;");
-
-
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Account>().Property(e => e.Id).ValueGeneratedNever();
+            //builder.Entity<Account>().Property(e => e.Id).ValueGeneratedNever();
+            builder.Entity<Account>().Property(e => e.Id);
+            //modelBuilder.Entity<YourEntity>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
 
             builder.Entity<Account>()
                  .ToTable("Accounts")
