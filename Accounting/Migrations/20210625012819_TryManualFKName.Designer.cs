@@ -5,14 +5,16 @@ using Accounting.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Accounting.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210625012819_TryManualFKName")]
+    partial class TryManualFKName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +68,7 @@ namespace Accounting.Migrations
                 {
                     b.HasBaseType("Accounting.Domain.Account");
 
-                    b.Property<Guid?>("ParentHeadingAccountId")
+                    b.Property<Guid>("ParentHeadingAccountId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasIndex("ParentHeadingAccountId");
@@ -78,7 +80,7 @@ namespace Accounting.Migrations
                 {
                     b.HasBaseType("Accounting.Domain.Account");
 
-                    b.Property<Guid?>("ParentHeadingAccountId")
+                    b.Property<Guid>("ParentHeadingAccountId")
                         .HasColumnName("PostingAccount_ParentHeadingAccountId")
                         .HasColumnType("uniqueidentifier");
 
@@ -104,15 +106,17 @@ namespace Accounting.Migrations
                     b.HasOne("Accounting.Domain.HeadingAccount", "ParentHeadingAccount")
                         .WithMany("HeadingAccounts")
                         .HasForeignKey("ParentHeadingAccountId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Accounting.Domain.PostingAccount", b =>
                 {
                     b.HasOne("Accounting.Domain.HeadingAccount", "ParentHeadingAccount")
-                        .WithMany("PostingAccounts")
+                        .WithMany()
                         .HasForeignKey("ParentHeadingAccountId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Accounting.Domain.RootAccount", b =>

@@ -10,10 +10,11 @@ namespace Accounting
         {
             Console.WriteLine("Hello World!");
 
-            string result = Execute(x => x.InsertThreeDifferentGroupsOfAccounts());
-            Console.WriteLine(result);
+            //string result = Execute(x => x.InsertThreeDifferentGroupsOfAccounts());
+            //Console.WriteLine(result);
+            //Execute(x => x.ViewThreeDifferentGroupsOfAccounts());
 
-            Execute(x => x.ViewThreeDifferentGroupsOfAccounts());
+            Execute(x => x.CreateNewChart());
         }
 
 
@@ -22,6 +23,15 @@ namespace Accounting
             using (var context = new AccountingDbContext())
             {
                 var controller = new AccountsController(context);
+                return func(controller);
+            }
+        }
+
+        private static string Execute(Func<ChartsController, string> func)
+        {
+            using (var context = new AccountingDbContext())
+            {
+                var controller = new ChartsController(context);
                 return func(controller);
             }
         }

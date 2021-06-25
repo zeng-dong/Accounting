@@ -50,6 +50,18 @@ namespace Accounting.DataAccess
                  .HasValue<HeadingAccount>(PostingType.Heading)
                  .HasValue<RootAccount>(PostingType.Root);
 
+            builder.Entity<PostingAccount>()
+                .HasOne(p => p.ParentHeadingAccount)
+                .WithMany(h => h.PostingAccounts)
+                //.HasForeignKey(p => p.ParentHeadingAccountId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<HeadingAccount>()
+                .HasOne(p => p.ParentHeadingAccount)
+                .WithMany(h => h.HeadingAccounts)
+                //.HasForeignKey(h => h.ParentHeadingAccountId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             //builder
             //    .Entity<PostingAccount>()
             //    .Property(e => e.AccountType)

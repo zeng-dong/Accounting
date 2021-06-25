@@ -5,14 +5,16 @@ using Accounting.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Accounting.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210625010940_HeadingAccountContainsBothChildrenParent")]
+    partial class HeadingAccountContainsBothChildrenParent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,10 +68,10 @@ namespace Accounting.Migrations
                 {
                     b.HasBaseType("Accounting.Domain.Account");
 
-                    b.Property<Guid?>("ParentHeadingAccountId")
+                    b.Property<Guid?>("ParentAccountId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("ParentHeadingAccountId");
+                    b.HasIndex("ParentAccountId");
 
                     b.HasDiscriminator().HasValue(2);
                 });
@@ -78,11 +80,10 @@ namespace Accounting.Migrations
                 {
                     b.HasBaseType("Accounting.Domain.Account");
 
-                    b.Property<Guid?>("ParentHeadingAccountId")
-                        .HasColumnName("PostingAccount_ParentHeadingAccountId")
+                    b.Property<Guid?>("HeadingAccountId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("ParentHeadingAccountId");
+                    b.HasIndex("HeadingAccountId");
 
                     b.HasDiscriminator().HasValue(1);
                 });
@@ -101,18 +102,16 @@ namespace Accounting.Migrations
 
             modelBuilder.Entity("Accounting.Domain.HeadingAccount", b =>
                 {
-                    b.HasOne("Accounting.Domain.HeadingAccount", "ParentHeadingAccount")
+                    b.HasOne("Accounting.Domain.HeadingAccount", "ParentAccount")
                         .WithMany("HeadingAccounts")
-                        .HasForeignKey("ParentHeadingAccountId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ParentAccountId");
                 });
 
             modelBuilder.Entity("Accounting.Domain.PostingAccount", b =>
                 {
-                    b.HasOne("Accounting.Domain.HeadingAccount", "ParentHeadingAccount")
+                    b.HasOne("Accounting.Domain.HeadingAccount", null)
                         .WithMany("PostingAccounts")
-                        .HasForeignKey("ParentHeadingAccountId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("HeadingAccountId");
                 });
 
             modelBuilder.Entity("Accounting.Domain.RootAccount", b =>
