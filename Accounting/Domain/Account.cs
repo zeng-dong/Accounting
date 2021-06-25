@@ -7,7 +7,7 @@
         public string Description { get; private set; }
         public int DisplayPosition { get; private set; }
 
-        public AccountGrouping Group { get; private set; }
+        public PostingType PostingType { get; private set; }
 
         protected Account()
         {
@@ -20,6 +20,11 @@
             Number = number;
             Description = description;
             DisplayPosition = displayPosition;
+        }
+
+        public override string ToString()
+        {
+            return $"PostingType: {PostingType} : Id = {Id}, Name = {Name}, Description = {Description}, DisplayPosition = {DisplayPosition}";
         }
     }
 }

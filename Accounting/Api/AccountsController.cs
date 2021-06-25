@@ -1,5 +1,7 @@
 ﻿using Accounting.DataAccess;
 using Accounting.Domain;
+using System;
+using System.Linq;
 
 namespace Accounting.Api
 {
@@ -10,6 +12,20 @@ namespace Accounting.Api
         public AccountsController(AccountingDbContext context)
         {
             _context = context;
+        }
+
+        public string ViewThreeDifferentGroupsOfAccounts()
+        {
+            var root = _context.RootAccounts.First();
+            Console.WriteLine(root.ToString());
+
+            var heading = _context.HeadingAccounts.First();
+            Console.WriteLine(heading.ToString());
+
+            var posting = _context.PostingAccounts.First();
+            Console.WriteLine(posting.ToString());
+
+            return "Done";
         }
 
         public string InsertThreeDifferentGroupsOfAccounts()
@@ -56,8 +72,5 @@ info: Microsoft.EntityFrameworkCore.Database.Command[20101]
 
              */
         }
-
-
-
     }
 }

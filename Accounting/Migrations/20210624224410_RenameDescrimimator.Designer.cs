@@ -5,14 +5,16 @@ using Accounting.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Accounting.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210624224410_RenameDescrimimator")]
+    partial class RenameDescrimimator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,34 +34,20 @@ namespace Accounting.Migrations
                     b.Property<int>("DisplayPosition")
                         .HasColumnType("int");
 
+                    b.Property<int>("Group")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PostingType")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
 
-                    b.HasDiscriminator<int>("PostingType");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.Chart", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Charts");
+                    b.HasDiscriminator<int>("Group");
                 });
 
             modelBuilder.Entity("Accounting.Domain.HeadingAccount", b =>
@@ -73,26 +61,14 @@ namespace Accounting.Migrations
                 {
                     b.HasBaseType("Accounting.Domain.Account");
 
-                    b.HasDiscriminator().HasValue(1);
+                    b.HasDiscriminator().HasValue(3);
                 });
 
             modelBuilder.Entity("Accounting.Domain.RootAccount", b =>
                 {
                     b.HasBaseType("Accounting.Domain.Account");
 
-                    b.Property<Guid?>("ChartId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("ChartId");
-
-                    b.HasDiscriminator().HasValue(3);
-                });
-
-            modelBuilder.Entity("Accounting.Domain.RootAccount", b =>
-                {
-                    b.HasOne("Accounting.Domain.Chart", null)
-                        .WithMany("Accounts")
-                        .HasForeignKey("ChartId");
+                    b.HasDiscriminator().HasValue(1);
                 });
 #pragma warning restore 612, 618
         }

@@ -11,8 +11,9 @@ namespace Accounting
             Console.WriteLine("Hello World!");
 
             string result = Execute(x => x.InsertThreeDifferentGroupsOfAccounts());
-
             Console.WriteLine(result);
+
+            Execute(x => x.ViewThreeDifferentGroupsOfAccounts());
         }
 
 

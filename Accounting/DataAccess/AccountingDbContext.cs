@@ -17,10 +17,13 @@ namespace Accounting.DataAccess
         //{
         //}
 
-        //public virtual DbSet<Chart> Charts { get; set; }
+
+        public virtual DbSet<Chart> Charts { get; set; }
         public virtual DbSet<HeadingAccount> HeadingAccounts { get; set; }
         public virtual DbSet<PostingAccount> PostingAccounts { get; set; }
         public virtual DbSet<RootAccount> RootAccounts { get; set; }
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,16 +37,18 @@ namespace Accounting.DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Chart>().Property(e => e.Id);
+
             //builder.Entity<Account>().Property(e => e.Id).ValueGeneratedNever();
             builder.Entity<Account>().Property(e => e.Id);
             //modelBuilder.Entity<YourEntity>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
 
             builder.Entity<Account>()
                  .ToTable("Accounts")
-                 .HasDiscriminator<AccountGrouping>("Grouping")
-                 .HasValue<PostingAccount>(AccountGrouping.Posting)
-                 .HasValue<HeadingAccount>(AccountGrouping.Heading)
-                 .HasValue<RootAccount>(AccountGrouping.Root);
+                 .HasDiscriminator<PostingType>("PostingType")
+                 .HasValue<PostingAccount>(PostingType.Posting)
+                 .HasValue<HeadingAccount>(PostingType.Heading)
+                 .HasValue<RootAccount>(PostingType.Root);
 
             //builder
             //    .Entity<PostingAccount>()
