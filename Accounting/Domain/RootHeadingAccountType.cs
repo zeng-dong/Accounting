@@ -1,4 +1,7 @@
-﻿namespace Accounting.Domain
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Accounting.Domain
 {
     public class RootHeadingAccountType : Enumeration
     {
@@ -26,5 +29,8 @@
             = new RootHeadingAccountType(9, "Wrong Postings");
 
         RootHeadingAccountType(int value, string displayName) : base(value, displayName) { }
+
+        public List<TransactionType> AssociatedTransactionTypes => GetAll<TransactionType>().Where(x => x.RootHeading.Equals(this)).ToList();
+
     }
 }
