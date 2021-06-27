@@ -13,6 +13,6 @@ namespace Accounting.Domain
         public virtual IEnumerable<PostingAccount> PostingAccounts => _postingAccounts.ToList();
 
         //public Guid ParentHeadingAccountId { get; private set; }
-        public virtual HeadingAccount ParentHeadingAccount { get; private set; }
+        //public virtual HeadingAccount ParentHeadingAccount { get; private set; }
     }
 }

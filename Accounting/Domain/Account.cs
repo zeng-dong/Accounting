@@ -22,6 +22,8 @@
             DisplayPosition = displayPosition;
         }
 
+        public virtual Account ParentAccount { get; private set; }
+
         public override string ToString()
         {
             return $"PostingType: {PostingType} : Id = {Id}, Name = {Name}, Description = {Description}, DisplayPosition = {DisplayPosition}";
