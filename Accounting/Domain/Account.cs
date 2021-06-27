@@ -22,7 +22,7 @@
             DisplayPosition = displayPosition;
         }
 
-        public virtual Account ParentAccount { get; private set; }
+        //public virtual Account ParentAccount { get; private set; }
 
         public override string ToString()
         {

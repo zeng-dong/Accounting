@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounting.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    [Migration("20210627000155_reset")]
+    [Migration("20210627012757_reset")]
     partial class reset
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,15 +40,10 @@ namespace Accounting.Migrations
                     b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ParentAccountId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("PostingType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentAccountId");
 
                     b.ToTable("Accounts");
 
@@ -73,10 +68,10 @@ namespace Accounting.Migrations
                 {
                     b.HasBaseType("Accounting.Domain.Account");
 
-                    b.Property<Guid?>("HeadingAccountId")
+                    b.Property<Guid?>("ParentHeadingAccountId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("HeadingAccountId");
+                    b.HasIndex("ParentHeadingAccountId");
 
                     b.HasDiscriminator().HasValue(2);
                 });
@@ -85,11 +80,11 @@ namespace Accounting.Migrations
                 {
                     b.HasBaseType("Accounting.Domain.Account");
 
-                    b.Property<Guid?>("HeadingAccountId")
-                        .HasColumnName("PostingAccount_HeadingAccountId")
+                    b.Property<Guid?>("ParentHeadingAccountId")
+                        .HasColumnName("PostingAccount_ParentHeadingAccountId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("HeadingAccountId");
+                    b.HasIndex("ParentHeadingAccountId");
 
                     b.HasDiscriminator().HasValue(1);
                 });
@@ -106,25 +101,18 @@ namespace Accounting.Migrations
                     b.HasDiscriminator().HasValue(3);
                 });
 
-            modelBuilder.Entity("Accounting.Domain.Account", b =>
-                {
-                    b.HasOne("Accounting.Domain.Account", "ParentAccount")
-                        .WithMany()
-                        .HasForeignKey("ParentAccountId");
-                });
-
             modelBuilder.Entity("Accounting.Domain.HeadingAccount", b =>
                 {
-                    b.HasOne("Accounting.Domain.HeadingAccount", null)
+                    b.HasOne("Accounting.Domain.HeadingAccount", "ParentHeadingAccount")
                         .WithMany("HeadingAccounts")
-                        .HasForeignKey("HeadingAccountId");
+                        .HasForeignKey("ParentHeadingAccountId");
                 });
 
             modelBuilder.Entity("Accounting.Domain.PostingAccount", b =>
                 {
-                    b.HasOne("Accounting.Domain.HeadingAccount", null)
+                    b.HasOne("Accounting.Domain.HeadingAccount", "ParentHeadingAccount")
                         .WithMany("PostingAccounts")
-                        .HasForeignKey("HeadingAccountId");
+                        .HasForeignKey("ParentHeadingAccountId");
                 });
 
             modelBuilder.Entity("Accounting.Domain.RootAccount", b =>
