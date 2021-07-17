@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting", "Accounting\Accounting.csproj", "{ECF78747-5E11-4883-8797-C4FC2A912BD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting", "Accounting\Accounting.csproj", "{ECF78747-5E11-4883-8797-C4FC2A912BD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FreshAccounting", "FreshAccounting", "{41836C74-59F4-4E38-A27B-489E39473DAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fresh.Domain", "Fresh.Domain\Fresh.Domain.csproj", "{AE246407-BA97-40D7-9DA9-9CD71F86E09F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{ECF78747-5E11-4883-8797-C4FC2A912BD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECF78747-5E11-4883-8797-C4FC2A912BD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECF78747-5E11-4883-8797-C4FC2A912BD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE246407-BA97-40D7-9DA9-9CD71F86E09F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE246407-BA97-40D7-9DA9-9CD71F86E09F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE246407-BA97-40D7-9DA9-9CD71F86E09F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE246407-BA97-40D7-9DA9-9CD71F86E09F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AE246407-BA97-40D7-9DA9-9CD71F86E09F} = {41836C74-59F4-4E38-A27B-489E39473DAC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4FA71880-3863-4D72-B27B-DADEAB540511}

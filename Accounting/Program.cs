@@ -14,7 +14,10 @@ namespace Accounting
             //Console.WriteLine(result);
             //Execute(x => x.ViewThreeDifferentGroupsOfAccounts());
 
-            Execute(x => x.CreateNewChart());
+            //Execute(x => x.CreateNewChart());
+
+            var accounts = RawData.Create();
+
         }
 
 
